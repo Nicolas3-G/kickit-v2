@@ -39,6 +39,7 @@ const CardGrid = () => {
                     <Card key={idx} title={feedElement.title} thumbnail={feedElement.thumbnail} />
                 )
             })}
+            <button onClick={() => generateFeed()}>Refresh</button>
         </div>
     )
 }
