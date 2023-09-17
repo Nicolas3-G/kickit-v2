@@ -34,9 +34,9 @@ const CardGrid = () => {
 
     return (
         <div className="grid grid-cols-4 gap-6 w-[97%] m-auto mt-16 pb-16">
-            {feedElements.map((feedElement) => {
+            {feedElements.map((feedElement, idx) => {
                 return (
-                    <Card title={feedElement.title} thumbnail={feedElement.thumbnail} />
+                    <Card key={idx} title={feedElement.title} thumbnail={feedElement.thumbnail} />
                 )
             })}
         </div>
