@@ -1,14 +1,18 @@
 import React from 'react'
 import AddGroup from './modals/AddGroup';
+import FocusItem from './modals/FocusItem';
 
 
 
 const ModalView = ({ activeModal, updateActiveModal }) => {
 
+    // Based on what activeModal is we return a component for that modal
     const displayCurrentModal = () => {
         switch (activeModal) {
             case "addGroup":
                 return <AddGroup />
+            case "focusItem":
+                return <FocusItem />
             default:
                 break;
         }
@@ -16,7 +20,7 @@ const ModalView = ({ activeModal, updateActiveModal }) => {
 
 
   return (
-    <div onClick={() => updateActiveModal(null)} className="h-screen w-screen bg-gray-800 bg-opacity-70 backdrop-blur-md z-10 fixed">
+    <div onClick={() => updateActiveModal(null)} className="h-screen overflow-y-auto w-screen bg-gray-800 bg-opacity-70 backdrop-blur-md z-10 fixed">
       {displayCurrentModal()}
     </div>
   )

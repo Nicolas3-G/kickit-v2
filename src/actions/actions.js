@@ -1,7 +1,8 @@
 export const ACTIONS = {
     ADD_GROUP: "add_group",
     JOIN_GROUP: "join_group",
-    LEAVE_GROUP: "leave_group"
+    LEAVE_GROUP: "leave_group",
+    UPDATE_FOCUSED_ITEM: "update_focused_item"
 }
 
 const reducer = (state, action) => {
@@ -26,7 +27,8 @@ const reducer = (state, action) => {
             // Remove User
             updatedGroup.members.splice(userIndex, 1);
             return { ...state, groups: state.groups.set(action.payload.groupId, updatedGroup) }
-
+        case ACTIONS.UPDATE_FOCUSED_ITEM:
+            return { ...state, focusedItem: action.payload.item}
         default:
             return state
     }

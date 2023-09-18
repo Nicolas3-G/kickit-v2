@@ -20,6 +20,7 @@ const initialReducerState = {
         [3, { id: 3, title: "3D Art Rendering", type: "creation", desc: "Created this awesome 3d art piece this weekend!", members: [], ownerId: 2, thumbnail: "/creationImages/3d.jpg"}],
     ]),
     userId: 4320,
+    focusedItem: {id: null, type: null},
 }
 
 export default initialReducerState;

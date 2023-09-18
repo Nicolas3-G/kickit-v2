@@ -60,7 +60,7 @@ const AddGroup = () => {
                     <p className="font-bold text-sm">Upload Image</p>
                 </div>}
                 {groupThumbnail && <div className="bg-slate-600 w-full overflow-hidden h-full relative">
-                    <Image objectFit="cover" layout="fill" src={groupThumbnail} />
+                    <Image className="object-cover" fill sizes="50vw" alt="Group Image" src={groupThumbnail} />
                     </div>}
             </div>
         )
@@ -164,7 +164,7 @@ const FormButton = ({ option, image, handleFormButtonClick }) => {
         <div onClick={(e) => handleFormButtonClick(e, option)} className="border border-gray-300 rounded-md h-16 w-full flex flex-row items-center px-4 justify-between m-2 mx-0 hover:bg-gray-200">
             <div className="relative w-4/6 h-full flex flex-row items-center">
                 <div className="relative w-3/12 h-full max-h-full">
-                    <Image layout='fill' objectFit='cover' src={image} />
+                    <Image fill sizes="10vw" className="object-cover" alt={`${option} icon`} src={image} />
                 </div>
                 <p className="capitalize ml-2">{option}</p>
             </div>

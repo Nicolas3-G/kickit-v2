@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 
 
-const CardGrid = () => {
+const CardGrid = ({ handleItemFocus }) => {
     const [feedElements, setFeedElements] = useState([]);
     const { state } = useContext(StateContext);
 
@@ -36,7 +36,7 @@ const CardGrid = () => {
         <div className="grid grid-cols-4 gap-6 w-[97%] m-auto mt-16 pb-16">
             {feedElements.map((feedElement, idx) => {
                 return (
-                    <Card key={idx} title={feedElement.title} thumbnail={feedElement.thumbnail} />
+                    <Card key={idx} handleItemFocus={handleItemFocus} item={feedElement} />
                 )
             })}
             <button onClick={() => generateFeed()}>Refresh</button>
@@ -44,15 +44,15 @@ const CardGrid = () => {
     )
 }
 
-const Card = ({ title, thumbnail }) => {
+const Card = ({ item, handleItemFocus }) => {
     return (
-        <div className="hover:scale-105 transition-all duration-150">
+        <div onClick={() => handleItemFocus(item)} className="hover:scale-105 transition-all duration-150">
             <div className="relative overflow-hidden rounded-sm h-64 w-full">
-                <Image layout='fill' objectFit='cover' src={thumbnail} />
+                <Image fill className="object-cover" src={item.thumbnail} alt={`item.title`} sizes="25vw"/>
             </div>
             <div className="flex flex-row justify-between">
                 <div>
-                    <h3 className="font-semibold">{title}</h3>
+                    <h3 className="font-semibold">{item.title}</h3>
                     <p className="text-xs">Hosting group name</p>
                 </div>
                 <div className="flex flex-row gap-2 items-start">
