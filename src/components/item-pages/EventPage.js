@@ -67,19 +67,19 @@ const EventPage = () => {
                   <button className="p-1 border bg-gradient-to-br from-red-300 to-red-500 rounded-2xl m-2 mx-auto block font-semibold text-md hover:opacity-75">
                     <div className="p-1 text-black rounded-xl flex flex-row items-center gap-2">
                       <FaUser size={18} />
-                      <span>I'm Going!</span>
+                      <span>I&apos;m Going!</span>
                     </div>
                   </button>
                   <button className="p-1 border bg-gradient-to-br from-red-300 to-red-500 rounded-2xl m-2 mx-auto block font-semibold text-md hover:opacity-75">
                     <div className="p-1 text-black rounded-xl flex flex-row items-center gap-2">
                       <FaUserFriends size={18} />
-                      <span>I'm Bringing Friends!</span>
+                      <span>I&apos;m Bringing Friends!</span>
                     </div>
                   </button>
                 </div>
               </section>
               <section>
-                <h2 className="font-semibold text-lg">Who's Going?</h2>
+                <h2 className="font-semibold text-lg">Who&apos;s Going?</h2>
                 <div className="border h-1/5 rounded-md">
                   Test
                 </div>
