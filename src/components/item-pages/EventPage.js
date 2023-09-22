@@ -8,6 +8,7 @@ import { IoLocationOutline } from 'react-icons/io5';
 import { FaUser, FaUserFriends } from 'react-icons/fa';
 import { FiEye } from 'react-icons/fi';
 import { ImTicket } from 'react-icons/im';
+import FocusedSideBar from "./components/FocusedSideBar";
 
 
 

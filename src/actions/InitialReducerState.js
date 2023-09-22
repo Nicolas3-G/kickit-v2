@@ -10,9 +10,9 @@ const initialReducerState = {
         [3, { id: 3, noteCard: {title: "Welcome 3", text: "Test Text"}}],
       ]),
     events: new Map ([
-        [1, { id: 1, title: "Game Night @ O'Mally's", type: "event", desc: "Broad games and drinks, come on down!", members: [1, 2], ownerId: 2, thumbnail: "/eventImages/game.jpg"}],
-        [2, { id: 2, title: "Pub Crawl", type: "event", desc: "Bi-weekly pub crawl around downtown SF. Register now.", members: [1], ownerId: 2, thumbnail: "/eventImages/pub.jpg"}],
-        [3, { id: 3, title: "Casual Speed Dating", type: "event", desc: "Come work on your rizzling with other singles", members: [1, 2, 3], ownerId: 2, thumbnail: "/eventImages/dating.jpg"}],
+        [1, { id: 1, title: "Game Night @ O'Mally's", type: "event", desc: "Broad games and drinks, come on down!", members: [1, 2], ownerId: 2, thumbnail: "/eventImages/game.jpg", likes: 15}],
+        [2, { id: 2, title: "Pub Crawl", type: "event", desc: "Bi-weekly pub crawl around downtown SF. Register now.", members: [1], ownerId: 2, thumbnail: "/eventImages/pub.jpg", likes: 132}],
+        [3, { id: 3, title: "Casual Speed Dating", type: "event", desc: "Come work on your rizzling with other singles", members: [1, 2, 3], ownerId: 2, thumbnail: "/eventImages/dating.jpg", likes: 241}],
     ]),
     creations: new Map ([
         [1, { id: 1, title: "Flower Painting", type: "creation", desc: "Worked on this the other day at muddy's!", members: [], ownerId: 1, thumbnail: "/creationImages/flower.jpg"}], 

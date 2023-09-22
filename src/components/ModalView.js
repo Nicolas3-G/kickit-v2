@@ -1,6 +1,7 @@
 import React from 'react'
 import AddGroup from './modals/AddGroup';
 import FocusItem from './modals/FocusItem';
+import FocusedSideBar from "./item-pages/components/FocusedSideBar";
 
 
 
@@ -20,9 +21,12 @@ const ModalView = ({ activeModal, updateActiveModal }) => {
 
 
   return (
+    <>
     <div onClick={() => updateActiveModal(null)} className="h-screen overflow-y-auto overflow-x-hidden w-screen bg-gray-800 bg-opacity-70 backdrop-blur-md z-10 fixed">
       {displayCurrentModal()}
     </div>
+    {activeModal == "focusItem" && <FocusedSideBar />}
+    </>
   )
 }
 

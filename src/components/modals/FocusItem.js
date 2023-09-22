@@ -3,7 +3,6 @@ import { StateContext } from '@/app/page';
 import GroupPage from "../item-pages/GroupPage";
 import EventPage from "../item-pages/EventPage";
 import CreationPage from "../item-pages/CreationPage";
-import SideBar from "../SideBar";
 import FocusedSideBar from "../item-pages/components/FocusedSideBar";
 
 const FocusItem = () => {
@@ -26,7 +25,7 @@ const FocusItem = () => {
   return (
     <div onClick={(e) => e.stopPropagation()} className="h-fit mx-20">
       {displayTypePage()}
-      <FocusedSideBar />
+      {/* <FocusedSideBar /> */}
     </div>
   )
 }
