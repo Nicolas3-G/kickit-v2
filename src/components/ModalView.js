@@ -10,7 +10,7 @@ const ModalView = ({ activeModal, updateActiveModal }) => {
     const displayCurrentModal = () => {
         switch (activeModal) {
             case "addGroup":
-                return <AddGroup />
+                return <AddGroup updateActiveModal={updateActiveModal} />
             case "focusItem":
                 return <FocusItem />
             default:

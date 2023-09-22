@@ -3,13 +3,17 @@ import { useContext } from 'react';
 import { StateContext } from '@/app/page';
 import Image from 'next/image';
 import TopBar from "./components/TopBar";
-import { AiOutlineCalendar, AiOutlineClockCircle, AiOutlineShop } from 'react-icons/ai';
+import { AiOutlineCalendar, AiOutlineClockCircle, AiOutlineShop, AiOutlineLike } from 'react-icons/ai';
 import { IoLocationOutline } from 'react-icons/io5';
 import { FaUser, FaUserFriends } from 'react-icons/fa';
+import { FiEye } from 'react-icons/fi';
+import { ImTicket } from 'react-icons/im';
+
 
 
 const EventPage = () => {
   const [itemData, setItemData] = useState(null);
+  const [memberArray, setMemberArray] = useState([]);
 
   const { state, dispatch } = useContext(StateContext);
 
@@ -17,6 +21,17 @@ const EventPage = () => {
     const item = state.events.get(state.focusedItem.id);
     setItemData(item);
   }, [state]);
+
+  useEffect(() => {
+    const item = state.events.get(state.focusedItem.id);
+    item.members.forEach((memberId) => {
+      const member = state.users.get(memberId);
+
+      if (memberArray.includes(member)) return;
+
+      setMemberArray((prev) => [...prev, member]);
+    })
+  }, []);
 
   return (
     <div>
@@ -35,6 +50,13 @@ const EventPage = () => {
                 Lorem reprehenderit incididunt anim elit magna ullamco eu ex nisi id do duis adipisicing. Exercitation occaecat commodo adipisicing ad ut sunt Lorem consequat ut cillum. Sint tempor ea culpa consectetur excepteur. Qui excepteur deserunt consequat excepteur velit duis non occaecat. Proident adipisicing enim mollit non deserunt enim elit velit incididunt eiusmod laboris anim. Duis sint Lorem ad reprehenderit id sint exercitation laborum qui consectetur non aliquip. Reprehenderit consectetur culpa veniam fugiat consectetur qui ullamco proident.
 
                 Cillum officia fugiat dolor tempor mollit mollit amet occaecat ex sunt. Aliqua labore sint et nostrud dolor nisi magna reprehenderit occaecat qui labore proident id. Est ea exercitation deserunt labore eiusmod culpa esse laboris incididunt laborum. Laboris ipsum nisi minim dolor ex Lorem sit excepteur commodo. Fugiat laborum pariatur qui excepteur qui id enim. Fugiat sint sint ullamco quis id anim reprehenderit sit enim aliqua ut nisi non. Ullamco consequat consectetur tempor anim exercitation incididunt voluptate.</p>
+              <section className="flex flex-row gap-2 py-4">
+                <Tag value="Dating" />
+                <Tag value="Social" />
+                <Tag value="Casual" />
+                <Tag value="Fun" />
+                <Tag value="Singles" />
+              </section>
             </article>
             <aside className="ml-auto w-2/5">
               <div className="flex flex-row gap-4">
@@ -62,33 +84,71 @@ const EventPage = () => {
                 </article>
               </div>
               <section className="my-4">
-                <h2 className="font-semibold text-lg">Are you going?</h2>
-                <div className="flex flex-row">
-                  <button className="p-1 border bg-gradient-to-br from-red-300 to-red-500 rounded-2xl m-2 mx-auto block font-semibold text-md hover:opacity-75">
-                    <div className="p-1 text-black rounded-xl flex flex-row items-center gap-2">
-                      <FaUser size={18} />
-                      <span>I&apos;m Going!</span>
-                    </div>
-                  </button>
-                  <button className="p-1 border bg-gradient-to-br from-red-300 to-red-500 rounded-2xl m-2 mx-auto block font-semibold text-md hover:opacity-75">
-                    <div className="p-1 text-black rounded-xl flex flex-row items-center gap-2">
-                      <FaUserFriends size={18} />
-                      <span>I&apos;m Bringing Friends!</span>
-                    </div>
-                  </button>
+                <div className="flex flex-row gap-2 items-center">
+                  <h2 className="font-semibold text-lg">Who&apos;s Going?</h2>
+                  <p className="text-sm text-gray-400">{itemData.members.length} Attending</p>
+                </div>
+                <div className="border px-4 h-1/5 rounded-md flex flex-row items-center gap-4">
+                  {memberArray.map((member) => {
+                    return (
+                      <div className="flex flex-col h-full items-center justify-between p-2">
+                        <div className="w-10 h-10 relative">
+                          <Image src={member.thumbnail} fill className="rounded-full object-cover" />
+                        </div>
+                        <p>{member.name}</p>
+                      </div>
+                    )
+                  })}
                 </div>
               </section>
-              <section>
-                <h2 className="font-semibold text-lg">Who&apos;s Going?</h2>
-                <div className="border h-1/5 rounded-md">
-                  Test
+              <section className="my-4">
+                <h2 className="font-semibold text-lg">Organizer</h2>
+                <div className="flex flex-col items-center py-8 gap-2">
+                  <div className="h-24 w-24 relative">
+                    <Image src={itemData.thumbnail} fill className="rounded-full object-cover" />
+                  </div>
+                  <h3 className="font-bold text-xl">Organizer Name</h3>
+                  <div className="w-1/3 justify-center flex flex-row gap-4 px-2">
+                    <OrganizorStat value="10" icon={<FaUserFriends size={18} />} />
+                    <OrganizorStat value="2.3k" icon={<AiOutlineLike size={18} />} />
+                    <OrganizorStat value="132" icon={<FiEye size={18} />} />
+                  </div>
                 </div>
+              </section>
+              <section className="flex flex-row gap-8">
+              <button className="w-2/5 h-12 block border bg-gradient-to-br from-yellow-300 to-orange-500 rounded-md m-2 mx-auto hover:opacity-100 opacity-75">
+                <div className="p-1 text-black rounded-xl flex flex-row items-center justify-center gap-2">
+                  <ImTicket size={18} />
+                  <span className="font-semibold">Join Event</span>
+                </div>
+              </button>
+              <button className="w-2/5 h-12 block border bg-gradient-to-br from-pink-300 to-red-500 rounded-md m-2 mx-auto hover:opacity-100 opacity-75">
+                <div className="p-1 text-black rounded-xl flex flex-row items-center justify-center gap-2">
+                  <FaUser size={18} />
+                  <span className="font-semibold">View Group</span>
+                </div>
+              </button>
               </section>
             </aside>
           </div>
         </div>
       </>}
     </div>
+  )
+}
+
+const OrganizorStat = ({ icon, value }) => {
+  return (
+    <div className="flex flex-col items-center flex-1 w">
+      {icon}
+      <p>{value}</p>
+    </div>
+  )
+}
+
+const Tag = ({ value }) => {
+  return (
+    <span className="px-4 text-xs py-2 bg-orange-200 text-orange-600 rounded-md">{value}</span>
   )
 }
 

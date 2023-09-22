@@ -16,7 +16,7 @@ const FocusedSideBar = () => {
 
 const SideBarButton = ({icon, text="Tooltip", clickFunction}) => {
     return (
-        <div onClick={clickFunction} className="group relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg border-black rounded-full border transition-all duration-300 hover:w-16">
+        <div onClick={clickFunction} className="group relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg border-white text-white rounded-full border transition-all duration-300 hover:w-16">
             {icon}
             <span className="absolute w-auto p-2 m-2 min-w-max left-14 opacity-0 group-hover:opacity-100 group-hover:text-gray-700 transition-all duration-500 ease-in-out">{text}</span>
         </div>
