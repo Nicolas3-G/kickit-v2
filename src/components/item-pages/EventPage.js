@@ -90,9 +90,9 @@ const EventPage = () => {
                   <p className="text-sm text-gray-400">{itemData.members.length} Attending</p>
                 </div>
                 <div className="border px-4 h-1/5 rounded-md flex flex-row items-center gap-4">
-                  {memberArray.map((member) => {
+                  {memberArray.map((member, idx) => {
                     return (
-                      <div className="flex flex-col h-full items-center justify-between p-2">
+                      <div key={idx} className="flex flex-col h-full items-center justify-between p-2">
                         <div className="w-10 h-10 relative">
                           <Image src={member.thumbnail} fill className="rounded-full object-cover" />
                         </div>
