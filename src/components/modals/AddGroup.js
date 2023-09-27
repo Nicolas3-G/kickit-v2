@@ -1,10 +1,10 @@
-import { StateContext } from '@/app/page';
 import Image from 'next/image';
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AiOutlineArrowRight, AiOutlineClose } from 'react-icons/ai';
 import { FcAddImage } from 'react-icons/fc';
-import { ACTIONS } from '@/actions/actions';
 import { PiConfettiFill } from 'react-icons/pi';
+import { useDispatch, useSelector } from "react-redux";
+import { addGroup, updateFocusedItem } from "@/redux/features/data-slice";
 
 
 
@@ -15,10 +15,12 @@ const AddGroup = ({ updateActiveModal }) => {
     const [groupThumbnail, setGroupThumbnail] = useState(null);
     const [createdGroupId, setCreatedGroupId] = useState(null);
 
+    // Hardcoded location
     const location = "san francisco"
     const fileUploadRef = useRef(null);
 
-    const { state, dispatch } = useContext(StateContext);
+    const state = useSelector((state) => state.dataReducer.value)
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setShowCard(true);
@@ -38,13 +40,15 @@ const AddGroup = ({ updateActiveModal }) => {
 
     const handleGoToGroupClick = () => {
         updateActiveModal("focusItem");
-        dispatch({ type: ACTIONS.UPDATE_FOCUSED_ITEM, payload: { item: { id: createdGroupId, type: "group" } } })
+        dispatch(updateFocusedItem({item: {id: createdGroupId, type: "group"}}))
+        // dispatch({ type: ACTIONS.UPDATE_FOCUSED_ITEM, payload: { item: { id: createdGroupId, type: "group" } } })
     }
 
     const handleCreateClick = (nameInput) => {
         console.log("Created Group", category, location, nameInput, groupThumbnail);
-        const newGroup = { id: (state.groups.size + 1), title: `${nameInput}`, type: "group", desc: `Add description...`, members: [state.userId], ownerId: state.userId, thumbnail: groupThumbnail }
-        dispatch({ type: ACTIONS.ADD_GROUP, payload: { group: newGroup } })
+        const newGroup = { id: (Object.keys(state.groups).length + 1), title: `${nameInput}`, type: "group", desc: `Add description...`, members: [state.userId], ownerId: state.userId, thumbnail: groupThumbnail }
+        // dispatch({ type: ACTIONS.ADD_GROUP, payload: { group: newGroup } })
+        dispatch(addGroup(newGroup))
         setCreatedGroupId(newGroup.id);
         handleFormButtonClick(null)
     }

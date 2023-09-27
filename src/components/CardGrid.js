@@ -1,14 +1,15 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { HiUserGroup } from 'react-icons/hi'
 import { AiOutlineLike } from 'react-icons/ai'
-import { StateContext } from "@/app/page";
 import Image from 'next/image'
+import { useSelector } from "react-redux";
+
 
 
 
 const CardGrid = ({ handleItemFocus }) => {
     const [feedElements, setFeedElements] = useState([]);
-    const { state } = useContext(StateContext);
+    const state = useSelector((state) => state.dataReducer.value);
 
     useEffect(() => {
         generateFeed();
@@ -16,14 +17,15 @@ const CardGrid = ({ handleItemFocus }) => {
 
     const generateFeed = () => {
         // Randomly selects a dataset (events/groups/creations) and pops a value off and add its to the feedElements
-        let feedElements = [];
+        let feedElements = [];;
         while (feedElements.length < 8) {
             const randomNumber = Math.floor(Math.random() * 3);
             const elementChoices = [state.groups, state.events, state.creations];
-            const randomIndex = Math.floor(Math.random() * elementChoices[randomNumber].size) + 1;
             // Select element with random number for dataset choide and random index for element choice
-            const feedElement = elementChoices[randomNumber].get(randomIndex);
-
+            const dataSet = elementChoices[randomNumber];
+            const randomIndex = Math.floor(Math.random() * Object.keys(dataSet).length) + 1;
+            
+            const feedElement = dataSet[randomIndex];
             if (feedElement && !feedElements.includes(feedElement)) {
                 feedElements.push(feedElement);
             }

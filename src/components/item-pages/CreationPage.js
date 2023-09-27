@@ -3,14 +3,15 @@ import { useContext } from 'react';
 import { StateContext } from '@/app/page';
 import Image from 'next/image';
 import TopBar from "./components/TopBar";
+import { useSelector } from "react-redux";
 
 const CreationPage = () => {
   const [itemData, setItemData] = useState(null);
 
-  const { state, dispatch } = useContext(StateContext);
+  const state = useSelector((state) => state.dataReducer.value);
 
   useEffect(() => {
-    const item = state.creations.get(state.focusedItem.id);
+    const item = state.creations[state.focusedItem.id];
     setItemData(item);
   }, [state]);
 

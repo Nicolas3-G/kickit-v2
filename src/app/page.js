@@ -3,20 +3,24 @@
 import SideBar from '@/components/SideBar'
 import MainDisplayWindow from '@/components/MainDisplayWindow'
 import CardGrid from '@/components/CardGrid'
-import React, { useReducer, useState, useEffect } from 'react'
-import reducer, { ACTIONS } from '@/actions/actions';
-import initialReducerState from '@/actions/InitialReducerState';
+import React, { useState, useEffect } from 'react'
 import ModalView from '@/components/ModalView'
+import { useDispatch, useSelector } from "react-redux"
+import { updateFocusedItem } from "@/redux/features/data-slice"
 
 export const StateContext = React.createContext();
 
 export default function Home() {
-  const [state, dispatch] = useReducer(reducer, initialReducerState);
+  // Redux State
+  const state = useSelector((state) => state.dataReducer.value)
+  const dispatch = useDispatch();
+
+  // Other State
   const [activeModal, setActiveModal] = useState(null);
 
   useEffect(() => {
-    console.log("State updated:", state.focusedItem);
-  }, [state.focusedItem]);
+    console.log("State groups updated:", state.groups);
+  }, [state.groups]);
 
   useEffect(() => {
     if (activeModal) {
@@ -32,13 +36,12 @@ export default function Home() {
 
   const handleItemFocus = (item) => {
     updateActiveModal("focusItem");
-    // Updates focused item in state
-    dispatch({ type: ACTIONS.UPDATE_FOCUSED_ITEM, payload: { item: { id: item.id, type: item.type } } })
+    // Updates focused item in REDUX state
+    dispatch(updateFocusedItem({ item: { id: item.id, type: item.type } }))
   }
 
 
   return (
-    <StateContext.Provider value={{ state, dispatch }}>
       <main>
         {activeModal && <ModalView activeModal={activeModal} updateActiveModal={updateActiveModal} />}
         <SideBar updateActiveModal={updateActiveModal} />
@@ -50,6 +53,5 @@ export default function Home() {
           <CardGrid handleItemFocus={handleItemFocus} />
         </MainDisplayWindow>
       </main>
-    </StateContext.Provider>
   )
 }

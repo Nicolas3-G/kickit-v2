@@ -4,6 +4,7 @@ import { HiUserGroup } from 'react-icons/hi'
 import { BiSolidCalendarEvent } from 'react-icons/bi'
 
 const SideBar = ({ updateActiveModal }) => {
+
   return (
     <div className="fixed top-0 left-0 h-screen m-0 flex flex-col bg-gradient-to-b to-orange-200 from-yellow-200 w-16 text-orange-800">
       <SideBarButton text="Home" icon={<AiFillHome size="25"/>}/>

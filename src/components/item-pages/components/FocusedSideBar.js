@@ -1,25 +1,25 @@
-import { StateContext } from "@/app/page"
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { AiFillLike, AiFillEye } from 'react-icons/ai'
 import { HiUserGroup } from 'react-icons/hi'
 import { ImTicket } from "react-icons/im"
 import { RiOrganizationChart } from 'react-icons/ri'
+import { useSelector } from "react-redux"
 
 const FocusedSideBar = () => {
-    const { state, dispatch } = useContext(StateContext);
+    const state = useSelector((state) => state.dataReducer.value)
     const [itemData, setItemData] = useState(null);
 
     useEffect(() => {
         let item;
         switch (state.focusedItem.type) {
             case "group":
-                item = state.groups.get(state.focusedItem.id);
+                item = state.groups[state.focusedItem.id];
                 break;
             case "event":
-                item = state.events.get(state.focusedItem.id);
+                item = state.events[state.focusedItem.id];
                 break;
             case "creation":
-                item = state.creations.get(state.focusedItem.id);
+                item = state.creations[state.focusedItem.id];
                 break;
             default:
                 return

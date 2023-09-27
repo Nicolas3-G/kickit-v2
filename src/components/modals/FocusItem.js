@@ -1,12 +1,10 @@
-import React, { useContext } from 'react'
-import { StateContext } from '@/app/page';
 import GroupPage from "../item-pages/GroupPage";
 import EventPage from "../item-pages/EventPage";
 import CreationPage from "../item-pages/CreationPage";
-import FocusedSideBar from "../item-pages/components/FocusedSideBar";
+import { useSelector } from "react-redux";
 
 const FocusItem = () => {
-  const {state, dispatch} = useContext(StateContext)
+  const state = useSelector((state) => state.dataReducer.value)
 
   const displayTypePage = () => {
     switch (state.focusedItem.type) {

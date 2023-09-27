@@ -3,36 +3,53 @@ import { useContext } from 'react';
 import { StateContext } from '@/app/page';
 import Image from 'next/image';
 import TopBar from "./components/TopBar";
+// Icon Imports
 import { AiOutlineCalendar, AiOutlineClockCircle, AiOutlineShop, AiOutlineLike } from 'react-icons/ai';
 import { IoLocationOutline } from 'react-icons/io5';
 import { FaUser, FaUserFriends } from 'react-icons/fa';
 import { FiEye } from 'react-icons/fi';
 import { ImTicket } from 'react-icons/im';
-import FocusedSideBar from "./components/FocusedSideBar";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { joinEvent } from "@/redux/features/data-slice";
 
 const EventPage = () => {
   const [itemData, setItemData] = useState(null);
   const [memberArray, setMemberArray] = useState([]);
+  const [isAttending, setIsAttending] = useState(false)
 
-  const { state, dispatch } = useContext(StateContext);
+  const state = useSelector((state) => state.dataReducer.value)
+  const dispatch = useDispatch();
 
+  // Gets focused item data from state
   useEffect(() => {
-    const item = state.events.get(state.focusedItem.id);
+    const item = state.events[state.focusedItem.id];
     setItemData(item);
   }, [state]);
 
   useEffect(() => {
-    const item = state.events.get(state.focusedItem.id);
+    const item = state.events[state.focusedItem.id];
+    if (item.members.includes(state.userId)) {
+      setIsAttending(true)
+    }
+
+    let generatedArray = [];
     item.members.forEach((memberId) => {
-      const member = state.users.get(memberId);
-
-      if (memberArray.includes(member)) return;
-
-      setMemberArray((prev) => [...prev, member]);
+      const member = state.users[memberId];
+      // Otherwise add the user to the existing array
+      generatedArray.push(member)
     })
-  }, []);
+    console.log("Setting state member array:", generatedArray)
+    setMemberArray(generatedArray)
+  }, [itemData]);
+
+
+
+
+  const handleJoinEventClick = () => {
+    const response = dispatch(joinEvent({ eventId: itemData.id, userId: state.userId }));
+    console.log("Response join event:", response)
+    setIsAttending(true);
+  }
 
   return (
     <div>
@@ -88,6 +105,7 @@ const EventPage = () => {
                 <div className="flex flex-row gap-2 items-center">
                   <h2 className="font-semibold text-lg">Who&apos;s Going?</h2>
                   <p className="text-sm text-gray-400">{itemData.members.length} Attending</p>
+                  {isAttending && <p className="text-sm text-orange-400 font-semibold">- You&apos;re going</p>}
                 </div>
                 <div className="border px-4 h-1/5 rounded-md flex flex-row items-center gap-4">
                   {memberArray.map((member, idx) => {
@@ -117,18 +135,18 @@ const EventPage = () => {
                 </div>
               </section>
               <section className="flex flex-row gap-8">
-              <button className="w-2/5 h-12 block border bg-gradient-to-br from-yellow-300 to-orange-500 rounded-md m-2 mx-auto hover:opacity-100 opacity-75">
-                <div className="p-1 text-black rounded-xl flex flex-row items-center justify-center gap-2">
-                  <ImTicket size={18} />
-                  <span className="font-semibold">Join Event</span>
-                </div>
-              </button>
-              <button className="w-2/5 h-12 block border bg-gradient-to-br from-pink-300 to-red-500 rounded-md m-2 mx-auto hover:opacity-100 opacity-75">
-                <div className="p-1 text-black rounded-xl flex flex-row items-center justify-center gap-2">
-                  <FaUser size={18} />
-                  <span className="font-semibold">View Group</span>
-                </div>
-              </button>
+                <button onClick={handleJoinEventClick} className="w-2/5 h-12 block border bg-gradient-to-br from-yellow-300 to-orange-500 rounded-md m-2 mx-auto hover:opacity-100 opacity-75">
+                  <div className="p-1 text-black rounded-xl flex flex-row items-center justify-center gap-2">
+                    <ImTicket size={18} />
+                    <span className="font-semibold">{isAttending ? "Joined!":"Join Event"}</span>
+                  </div>
+                </button>
+                <button onClick={() => setMemberArray([])} className="w-2/5 h-12 block border bg-gradient-to-br from-pink-300 to-red-500 rounded-md m-2 mx-auto hover:opacity-100 opacity-75">
+                  <div className="p-1 text-black rounded-xl flex flex-row items-center justify-center gap-2">
+                    <FaUser size={18} />
+                    <span className="font-semibold">View Group</span>
+                  </div>
+                </button>
               </section>
             </aside>
           </div>
