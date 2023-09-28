@@ -27,7 +27,7 @@ const UpcomingEvents = () => {
 
 
     return (
-        <div className="bg-white shadow-lg rounded-2xl flex-col flex p-4 shadow-gray-400 h-52 flex-1 ">
+        <div className="bg-gray-100 border border-gray-200 shadow-lg rounded-2xl flex-col flex p-4 shadow-gray-400 max-h-52 h-52 ">
             <h2 className="font-bold text-lg">Upcoming Events</h2>
             <section className="flex-1 flex-row flex gap-2">
                 <EventCard />

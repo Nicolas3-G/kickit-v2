@@ -3,7 +3,7 @@ import React from 'react'
 
 const GroupFeed = () => {
 
-    const Post = () => {
+    const Post = ({imageOne, imageTwo, postText}) => {
         return (
             <div className="bg-white w-full min-h-min rounded-lg p-4">
                 <section className="h-12 caret-lime-200 flex flex-row">
@@ -16,24 +16,28 @@ const GroupFeed = () => {
                     </div>
                 </section>
                 <section className="py-4 text-md">
-                    <p>A new event was added "Designer Meetup" at 4:00pm Friday!</p>
-                    <div className="flex flex-row gap-4">
+                    <p>{postText}</p>
+                    {imageOne && <div className="flex flex-row gap-4">
 
                         <div className="mt-4 w-1/2 h-44 rounded-lg overflow-hidden relative">
-                            <Image fill className="object-cover" src="/eventImages/dating.jpg" />
+                            <Image fill className="object-cover" src={imageOne} />
                         </div>
-                        <div className="mt-4 w-1/2 h-44 rounded-lg overflow-hidden relative">
-                            <Image fill className="object-cover" src="/eventImages/dating.jpg" />
-                        </div>
-                    </div>
+                        {imageTwo && <div className="mt-4 w-1/2 h-44 rounded-lg overflow-hidden relative">
+                            <Image fill className="object-cover" src={imageTwo} />
+                        </div>}
+                    </div>}
                 </section>
             </div>
         )
     }
 
     return (
-        <div className="bg-gray-200 w-1/2 h-full p-4">
-            <Post />
+        <div className="bg-gray-200 w-1/2 h-full p-4 flex flex-col gap-4 max-h-full overflow-y-scroll">
+            <Post postText={"The group went to the bar for a little after party!"} imageOne="/eventImages/game.jpg" imageTwo="/eventImages/pub.jpg" />
+            <Post postText={"Next week's event is postponed due to the storm 😞"} />
+            <Post postText={"Make sure to bring in your resumes this weekend we have recruiters stopping by!"}/>
+            <Post postText={"Hey guys we are working downtown today come join us!"} imageOne="/groupImages/design.jpg"/>
+            <Post postText={"The group name was updated to 'Design Group'"}/>
         </div>
     )
 }

@@ -28,6 +28,7 @@ const initialReducerState = {
         },
         userId: 4320,
         focusedItem: { id: null, type: null },
+        editMode: false,
     }
 }
 

@@ -156,6 +156,8 @@ const AddGroup = ({ updateActiveModal }) => {
 
 
     return (
+        // IMPORTANT: Make sure pageholder is a seperate component outside the scope of the main component and pass in the page state to it
+        // This effects the re-rendering and so it will block the transition effects
         <div className="flex flex-row h-screen items-center">
             {/* Changes height on last card */}
             <div onClick={(e) => e.stopPropagation()} className={`${page != 4 ? "h-4/6" : "h-2/6"} w-[27%] overflow-hidden bg-white rounded-sm mx-auto ${showCard ? 'scale-100' : 'scale-0'} transition-all duration-300`}>
@@ -170,8 +172,6 @@ const AddGroup = ({ updateActiveModal }) => {
         </div>
     );
 };
-
-
 
 const PageHolder = ({ children, page }) => {
     return (

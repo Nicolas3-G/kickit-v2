@@ -1,12 +1,15 @@
+import { toggleEditMode } from "@/redux/features/data-slice"
 import React, { useState, useEffect } from 'react'
 import { AiFillLike, AiFillEye } from 'react-icons/ai'
 import { HiUserGroup } from 'react-icons/hi'
-import { ImTicket } from "react-icons/im"
+import { ImTicket, ImWrench } from "react-icons/im"
 import { RiOrganizationChart } from 'react-icons/ri'
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+
 
 const FocusedSideBar = () => {
     const state = useSelector((state) => state.dataReducer.value)
+    const dispatch = useDispatch();
     const [itemData, setItemData] = useState(null);
 
     useEffect(() => {
@@ -35,6 +38,8 @@ const FocusedSideBar = () => {
             <SideBarButton text="Group" icon={<HiUserGroup size="25" />} />
             <SideBarButton text="Join Event" icon={<ImTicket size="25" />} />
             <SideBarButton text="Organizers" icon={<RiOrganizationChart size="25" />} />
+            {/* Only show button when owner and is group */}
+            {itemData.type == "group" && itemData.ownerId == state.userId && <SideBarButton clickFunction={() => dispatch(toggleEditMode())} text="Edit" icon={<ImWrench size="25" />} />}
         </div>
     )
 }

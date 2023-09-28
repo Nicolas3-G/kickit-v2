@@ -14,6 +14,9 @@ export const data = createSlice({
         updateFocusedItem: (state, action) => {
             state.value.focusedItem = action.payload.item;
         },
+        toggleEditMode: (state, action) => {
+            state.value.editMode = !state.value.editMode
+        },
         joinEvent: (state, action) => {
             console.log("Joining event payload:", action.payload.eventId)
             const event = state.value.events[action.payload.eventId]
@@ -25,5 +28,5 @@ export const data = createSlice({
     }
 })
 
-export const { addGroup, updateFocusedItem, joinEvent } = data.actions;
+export const { addGroup, updateFocusedItem, joinEvent, toggleEditMode } = data.actions;
 export default data.reducer;
