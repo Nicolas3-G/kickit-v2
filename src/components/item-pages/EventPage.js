@@ -10,12 +10,13 @@ import { FaUser, FaUserFriends } from 'react-icons/fa';
 import { FiEye } from 'react-icons/fi';
 import { ImTicket } from 'react-icons/im';
 import { useDispatch, useSelector } from "react-redux";
-import { joinEvent } from "@/redux/features/data-slice";
+import { joinEvent, updateFocusedItem } from "@/redux/features/data-slice";
 
 const EventPage = () => {
   const [itemData, setItemData] = useState(null);
   const [memberArray, setMemberArray] = useState([]);
-  const [isAttending, setIsAttending] = useState(false)
+  const [isAttending, setIsAttending] = useState(false);
+  const [parentGroupData, setParentGroupData] = useState(null);
 
   const state = useSelector((state) => state.dataReducer.value)
   const dispatch = useDispatch();
@@ -23,7 +24,9 @@ const EventPage = () => {
   // Gets focused item data from state
   useEffect(() => {
     const item = state.events[state.focusedItem.id];
+    const parentGroup = state.groups[item.groupId];
     setItemData(item);
+    setParentGroupData(parentGroup);
   }, [state]);
 
   useEffect(() => {
@@ -42,13 +45,14 @@ const EventPage = () => {
     setMemberArray(generatedArray)
   }, [itemData]);
 
-
-
-
   const handleJoinEventClick = () => {
     const response = dispatch(joinEvent({ eventId: itemData.id, userId: state.userId }));
     console.log("Response join event:", response)
     setIsAttending(true);
+  }
+
+  const handleViewGroupClick = () => {
+    dispatch(updateFocusedItem({ item: { id: itemData.groupId, type: "group" } }))
   }
 
   return (
@@ -124,9 +128,9 @@ const EventPage = () => {
                 <h2 className="font-semibold text-lg">Organizer</h2>
                 <div className="flex flex-col items-center py-8 gap-2">
                   <div className="h-24 w-24 relative">
-                    <Image src={itemData.thumbnail} fill className="rounded-full object-cover" />
+                    <Image src={parentGroupData.thumbnail} fill className="rounded-full object-cover" />
                   </div>
-                  <h3 className="font-bold text-xl">Organizer Name</h3>
+                  <h3 className="font-bold text-xl">{parentGroupData.title}</h3>
                   <div className="w-1/3 justify-center flex flex-row gap-4 px-2">
                     <OrganizorStat value="10" icon={<FaUserFriends size={18} />} />
                     <OrganizorStat value="2.3k" icon={<AiOutlineLike size={18} />} />
@@ -141,7 +145,7 @@ const EventPage = () => {
                     <span className="font-semibold">{isAttending ? "Joined!":"Join Event"}</span>
                   </div>
                 </button>
-                <button onClick={() => setMemberArray([])} className="w-2/5 h-12 block border bg-gradient-to-br from-pink-300 to-red-500 rounded-md m-2 mx-auto hover:opacity-100 opacity-75">
+                <button onClick={handleViewGroupClick} className="w-2/5 h-12 block border bg-gradient-to-br from-pink-300 to-red-500 rounded-md m-2 mx-auto hover:opacity-100 opacity-75">
                   <div className="p-1 text-black rounded-xl flex flex-row items-center justify-center gap-2">
                     <FaUser size={18} />
                     <span className="font-semibold">View Group</span>

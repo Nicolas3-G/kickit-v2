@@ -10,10 +10,25 @@ import GroupEditorOverlay from "./components/GroupEditorOverlay";
 
 const GroupPage = () => {
   const [itemData, setItemData] = useState(null);
+  const [eventArray, setEventArray] = useState(null);
   const state = useSelector((state) => state.dataReducer.value)
+
+  const createEventArray = () => {
+    const eventIds = state.groups[state.focusedItem.id].events;
+    
+    if (!eventIds) return console.log("No events");
+
+    const eventArray = eventIds.map((eventId) => {
+      return {
+        ...state.events[eventId],
+      }
+    })
+    setEventArray(eventArray);
+  }
 
   useEffect(() => {
     const item = state.groups[state.focusedItem.id];
+    createEventArray();
     setItemData(item);
   }, [state]);
 
@@ -36,11 +51,11 @@ const GroupPage = () => {
             <GroupFeed />
             <div className="flex-1 gap-4 flex flex-col">
               <Welcome />
-              <UpcomingEvents />
+              <UpcomingEvents eventArray={eventArray} />
               <Highlights />
             </div>
           </div>
-          {state.editMode && <GroupEditorOverlay />}
+          {state.editMode && <GroupEditorOverlay itemData={itemData} />}
         </div>
         
       </>}

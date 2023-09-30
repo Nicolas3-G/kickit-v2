@@ -1,6 +1,6 @@
-import { toggleEditMode } from "@/redux/features/data-slice"
+import { toggleEditMode, toggleLike } from "@/redux/features/data-slice"
 import React, { useState, useEffect } from 'react'
-import { AiFillLike, AiFillEye } from 'react-icons/ai'
+import { AiFillLike, AiFillEye, AiOutlineCheck } from 'react-icons/ai'
 import { HiUserGroup } from 'react-icons/hi'
 import { ImTicket, ImWrench } from "react-icons/im"
 import { RiOrganizationChart } from 'react-icons/ri'
@@ -11,6 +11,7 @@ const FocusedSideBar = () => {
     const state = useSelector((state) => state.dataReducer.value)
     const dispatch = useDispatch();
     const [itemData, setItemData] = useState(null);
+    const itemLiked = state.users[state.userId].likeList.includes(state.focusedItem.id);
 
     useEffect(() => {
         let item;
@@ -30,11 +31,22 @@ const FocusedSideBar = () => {
         if (item) setItemData(item);    
       }, [state]);
 
+    const handleLikeClick = () => {
+        dispatch(toggleLike({ itemId: itemData.id }));
+        // Update user likes
+        // Update item likes count
+        // Base icon on user likes to itemId
+    }
+
+    useEffect(() => {console.log("Logging user update:", state.users)}, [state.users])
+
+
+    // Dont render if no item data
     if (!itemData) return <div/>;
     return (
-        <div className="fixed z-10 w-20 top-20 right-4 h-screen m-0 flex gap-2 flex-col">
-            {itemData.likes && <SideBarButton text="Likes" icon={<AiFillLike size="25" />} counter={itemData.likes} />}
-            <SideBarButton text="Views" icon={<AiFillEye size="25" />} counter={2378} />
+        <div className="fixed z-20 w-20 top-20 right-4 h-screen m-0 flex gap-2 flex-col">
+            <SideBarButton text="Likes" icon={itemLiked ? <AiOutlineCheck size="25" />:<AiFillLike size="25" />} clickFunction={handleLikeClick} counter={itemData.likes} />
+            <SideBarButton text="Views" icon={<AiFillEye size="25" />} counter={itemData.views} />
             <SideBarButton text="Group" icon={<HiUserGroup size="25" />} />
             <SideBarButton text="Join Event" icon={<ImTicket size="25" />} />
             <SideBarButton text="Organizers" icon={<RiOrganizationChart size="25" />} />

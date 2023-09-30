@@ -46,7 +46,7 @@ const AddGroup = ({ updateActiveModal }) => {
 
     const handleCreateClick = (nameInput) => {
         console.log("Created Group", category, location, nameInput, groupThumbnail);
-        const newGroup = { id: (Object.keys(state.groups).length + 1), title: `${nameInput}`, type: "group", desc: `Add description...`, members: [state.userId], ownerId: state.userId, thumbnail: groupThumbnail }
+        const newGroup = { id: `1${(Object.keys(state.groups).length + 1)}`, title: `${nameInput}`, type: "group", desc: `Add description...`, events:[], members: [state.userId], ownerId: state.userId, thumbnail: groupThumbnail, likes: 1, views: 1 }
         // dispatch({ type: ACTIONS.ADD_GROUP, payload: { group: newGroup } })
         dispatch(addGroup(newGroup))
         setCreatedGroupId(newGroup.id);
