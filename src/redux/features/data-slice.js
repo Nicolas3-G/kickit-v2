@@ -18,7 +18,6 @@ export const data = createSlice({
             state.value.editMode = !state.value.editMode
         },
         joinEvent: (state, action) => {
-            console.log("Joining event payload:", action.payload.eventId)
             const event = state.value.events[action.payload.eventId]
             const updatedMembers = [...event.members, action.payload.userId]
             if (!event.members.includes(action.payload.userId)) {
@@ -30,44 +29,36 @@ export const data = createSlice({
             state.value.groups[groupId] = { ...state.value.groups[groupId], ...groupData }
         },
         toggleLike: (state, action) => {
-            let userId = state.value.userId;
+            const userId = state.value.userId;
+            const itemId = action.payload.itemId;
             let user = state.value.users[userId];
             let likes = user.likeList;
+            let itemType = state.value.focusedItem.type;
 
-            console.log("addLike logging: ", likes, "User:", state.value.users[state.value.userId]);
+            if (!likes.includes(itemId)) {
+                // Update user liked list
+                state.value.users[userId].likeList = [...likes, itemId];
 
-            if (!likes.includes(action.payload.itemId)) {
-                state.value.users[state.value.userId].likeList = [...likes, action.payload.itemId];
-                // Now we need to update the items like count
-                switch (state.value.focusedItem.type) {
-                    case "group":
-                        state.value.groups[state.value.focusedItem.id].likes += 1;
-                        break;
-                    case "event":
-                        state.value.events[state.value.focusedItem.id].likes += 1;
-                        break;
-                    case "creation":
-                        state.value.creations[state.value.focusedItem.id].likes += 1;
-                        break;
-                    default:
-                        return
+                // Add like based on item type
+                if (itemType == "group" ) {
+                    state.value.groups[itemId].likes += 1;
+                } else if (itemType == "event") {
+                    state.value.events[itemId].likes += 1;
+                } else {
+                    state.value.creations[itemId].likes += 1;
                 }
-
                 // Problem is we dont know what type of item it is
             } else {
+                // remove item from user likeList
                 state.value.users[state.value.userId].likeList = likes.filter((id) => id != action.payload.itemId)
-                switch (state.value.focusedItem.type) {
-                    case "group":
-                        state.value.groups[state.value.focusedItem.id].likes -= 1;
-                        break;
-                    case "event":
-                        state.value.events[state.value.focusedItem.id].likes -= 1;
-                        break;
-                    case "creation":
-                        state.value.creations[state.value.focusedItem.id].likes -= 1;
-                        break;
-                    default:
-                        return
+                
+                // Remove like based on item
+                if (itemType == "group" ) {
+                    state.value.groups[itemId].likes -= 1;
+                } else if (itemType == "event") {
+                    state.value.events[itemId].likes -= 1;
+                } else {
+                    state.value.creations[itemId].likes -= 1;
                 }
             }
         },
