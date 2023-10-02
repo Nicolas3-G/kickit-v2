@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import initialReducerState from "@/actions/InitialReducerStateRedux";
+import initialDataState from "@/redux/initialDataState";
 
 export const data = createSlice({
     name: "data",
-    initialState: initialReducerState,
+    initialState: initialDataState,
     reducers: {
         addGroup: (state, action) => {
             let newGroup = action.payload

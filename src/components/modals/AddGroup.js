@@ -5,6 +5,7 @@ import { FcAddImage } from 'react-icons/fc';
 import { PiConfettiFill } from 'react-icons/pi';
 import { useDispatch, useSelector } from "react-redux";
 import { addGroup, updateFocusedItem } from "@/redux/features/data-slice";
+import { addLayout } from "@/redux/features/layout-slice";
 
 
 
@@ -45,10 +46,13 @@ const AddGroup = ({ updateActiveModal }) => {
     }
 
     const handleCreateClick = (nameInput) => {
-        console.log("Created Group", category, location, nameInput, groupThumbnail);
+        //Create the new group object
         const newGroup = { id: `1${(Object.keys(state.groups).length + 1)}`, title: `${nameInput}`, type: "group", desc: `Add description...`, events:[], members: [state.userId], ownerId: state.userId, thumbnail: groupThumbnail, likes: 1, views: 1 }
-        // dispatch({ type: ACTIONS.ADD_GROUP, payload: { group: newGroup } })
+
+        // Add new group and layout to redux state
         dispatch(addGroup(newGroup))
+        dispatch(addLayout(newGroup.id))
+
         setCreatedGroupId(newGroup.id);
         handleFormButtonClick(null)
     }

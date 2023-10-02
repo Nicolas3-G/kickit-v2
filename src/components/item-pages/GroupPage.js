@@ -11,7 +11,11 @@ import GroupEditorOverlay from "./components/GroupEditorOverlay";
 const GroupPage = () => {
   const [itemData, setItemData] = useState(null);
   const [eventArray, setEventArray] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const state = useSelector((state) => state.dataReducer.value)
+  const layoutState = useSelector((state) => state.layoutReducer.value)
+  const currentLayout = layoutState.layouts[state.focusedItem.id];
+  
 
   const createEventArray = () => {
     const eventIds = state.groups[state.focusedItem.id].events;
@@ -28,9 +32,14 @@ const GroupPage = () => {
 
   useEffect(() => {
     const item = state.groups[state.focusedItem.id];
+
+    // Check if user is admin
+    setIsAdmin(state.userId === item.ownerId);
+
     createEventArray();
     setItemData(item);
   }, [state]);
+
 
   return (
     <div className="relative p-2">
@@ -47,14 +56,15 @@ const GroupPage = () => {
             </div>
           </section>
           <hr className="bg-black h-3 my-4" />
-          <div className="h-[150vh] flex flex-row gap-4">
-            <GroupFeed />
-            <div className="flex-1 gap-4 flex flex-col">
-              <Welcome />
+          
+          <section className="h-[150vh] grid grid-cols-2 gap-4">
+            <GroupFeed isAdmin={isAdmin} />
+            <div className="flex-1 max-w-full gap-4 flex flex-col">
+              <Welcome text={currentLayout["welcomeText"]}/>
               <UpcomingEvents eventArray={eventArray} />
               <Highlights />
             </div>
-          </div>
+          </section>
           {state.editMode && <GroupEditorOverlay itemData={itemData} />}
         </div>
         

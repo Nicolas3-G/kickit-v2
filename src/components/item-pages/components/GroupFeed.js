@@ -1,7 +1,7 @@
 import Image from "next/image"
 import React from 'react'
 
-const GroupFeed = () => {
+const GroupFeed = ({ isAdmin }) => {
 
     const Post = ({imageOne, imageTwo, postText}) => {
         return (
@@ -32,7 +32,8 @@ const GroupFeed = () => {
     }
 
     return (
-        <div className="bg-gray-200 w-1/2 h-full p-4 flex flex-col gap-4 max-h-full overflow-y-scroll">
+        <div className="bg-gray-200 w-full h-full p-4 flex flex-col gap-4 max-h-full overflow-y-scroll">
+            {isAdmin && <div>ADMIN</div>}
             <Post postText={"The group went to the bar for a little after party!"} imageOne="/eventImages/game.jpg" imageTwo="/eventImages/pub.jpg" />
             <Post postText={"Next week's event is postponed due to the storm 😞"} />
             <Post postText={"Make sure to bring in your resumes this weekend we have recruiters stopping by!"}/>

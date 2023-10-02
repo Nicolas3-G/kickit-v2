@@ -1,4 +1,4 @@
-const initialReducerState = {
+const initialDataState = {
     value: {
         groups: {
             11: { id: 11, title: "Westlake Dance", type: "group", events: [24, 25], desc: "Expansive dance community, with shows and daily classes!", members: [1], ownerId: 1, thumbnail: "/groupImages/dance.jpg", likes: 28, views: 3850 },
@@ -34,4 +34,4 @@ const initialReducerState = {
     }
 }
 
-export default initialReducerState;
+export default initialDataState;
