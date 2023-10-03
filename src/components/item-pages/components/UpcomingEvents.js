@@ -28,7 +28,7 @@ const UpcomingEvents = ({ eventArray }) => {
                     </div>
                 </div>
                 <div className="h-full rounded-lg overflow-hidden w-1/2 relative">
-                    <Image fill sizes="10vw" className="object-cover" src={event.thumbnail} />
+                    <Image alt="Event Thumbnail" fill sizes="10vw" className="object-cover" src={event.thumbnail} />
                 </div>
             </article>
         )

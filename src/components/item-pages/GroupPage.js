@@ -48,7 +48,7 @@ const GroupPage = () => {
         <div className="w-full relative bg-white min-h-max p-8 pb-0 overflow-hidden">
           <section className="flex flex-row h-56">
             <div className="relative h-full w-1/5 rounded-lg overflow-hidden">
-              <Image fill className="object-cover" src={itemData.thumbnail} />
+              <Image fill alt="Group Thumbnail" className="object-cover" src={itemData.thumbnail} />
             </div>
             <div className="p-4">
               <h1 className="text-5xl font-bold">{itemData.title}</h1>
@@ -58,7 +58,7 @@ const GroupPage = () => {
           <hr className="bg-black h-3 my-4" />
           
           <section className="h-[150vh] grid grid-cols-2 gap-4">
-            <GroupFeed isAdmin={isAdmin} />
+            <GroupFeed isAdmin={isAdmin} currentLayout={currentLayout} />
             <div className="flex-1 max-w-full gap-4 flex flex-col">
               <Welcome text={currentLayout["welcomeText"]}/>
               <UpcomingEvents eventArray={eventArray} />
